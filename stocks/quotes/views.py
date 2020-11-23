@@ -23,6 +23,25 @@ def home(request):
 def about(request):
     return render(request, 'about.html' , {})
 
+#$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+def chart(request):
+    #return render(request, 'chart.html' , {})
+    import requests 
+    import json
+
+    if request.method == 'POST':
+        schart = request.POST['schart']
+        api_request = requests.get("https://cloud.iexapis.com/stable/stock/" + schart + "/chart/5d?token=pk_3a23ad6ed1d84ad1b10f01c72dc2d07e")
+        try:
+            api = json.loads(api_request.content)
+        except Exception as e:
+            api = "Error..."
+        return render(request, 'chart.html' , {'api': api })
+
+    else: 
+        return render(request, 'chart.html' , {'schart': " Enter a Ticker Symbol in the Search..."})
+#$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+
 def add_stock(request):
     import requests 
     import json
