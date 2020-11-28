@@ -1,3 +1,4 @@
+
 {% extends 'base.html' %}
 
 {% block content%}
@@ -5,7 +6,7 @@
 <h1> Gonna git me a chart right here ! </h1>
 
 <br/>
-    <form action = "{% url 'chart' %}"  class ="form-inline my-2 my-lg-0" method="POST">
+    <form action = "{% url 'chart' %}" class ="form-inline my-2 my-lg-0" method="POST">
         {% csrf_token %}
       <input class="form-control mr-sm-2" type="search" placeholder="Select Stock" aria-label="Search" name="schart">
       <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit">Get Chart</button>
@@ -22,18 +23,22 @@
         There was an issue ,,  Try again !
 
     {% else %}
-        {{ api }}</br></br>
+        {{ api[] }}</br></br>
 
-        High:{{ api.high }}<br/>
-        Previous Close: ${{ api.previousClose }}<br/>
-        Market Cap: ${{ api.marketCap}}<br/>
-        52 wk High: ${{ api.week52High }}<br/>
-        52 wk Low: ${{ api.week52Low }}<br/>
-        YTD Change: {{ api.ytdChange }}<br/>
+        queryset =                  # get your data in here, put it into fields called date and price'
+        for entry in queryset:
+        labels.append(entry['date'])
+        data.append(entry['price'])
 
+        return JsonResponse(data={
+            'labels': labels,
+            'data': data,
+    })
 
+              
     {% endif %}
 
 {% endif %}
 
 {% endblock %}
+
