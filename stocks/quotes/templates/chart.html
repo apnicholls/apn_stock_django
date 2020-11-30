@@ -23,17 +23,11 @@
         There was an issue ,,  Try again !
 
     {% else %}
-        {{ api[] }}</br></br>
+    {% for item in api %}
+       <h1> {{ item.date }}</h1></br>
+       <h1>{{item.uVolume}}</h1></br>
+    {% endfor %} 
 
-        queryset =                  # get your data in here, put it into fields called date and price'
-        for entry in queryset:
-        labels.append(entry['date'])
-        data.append(entry['price'])
-
-        return JsonResponse(data={
-            'labels': labels,
-            'data': data,
-    })
 
               
     {% endif %}
