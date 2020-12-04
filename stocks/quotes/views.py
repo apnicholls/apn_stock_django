@@ -29,16 +29,33 @@ def chart(request):
     #return render(request, 'chart.html' , {})
     import requests 
     import json
+    from django.shortcuts import render
+    import matplotlib.pyplot as plt
+    import io
+    import urllib, base64
+    from matplotlib import pylab
 
     if request.method == 'POST':
         schart = request.POST['schart']
-        api_request = requests.get("https://cloud.iexapis.com/stable/stock/" + schart + "/chart/5d?token=pk_3a23ad6ed1d84ad1b10f01c72dc2d07e")
+        api_request = requests.get("https://cloud.iexapis.com/stable/stock/" + schart + "/chart/10d?token=pk_3a23ad6ed1d84ad1b10f01c72dc2d07e")
         try:
             api = json.loads(api_request.content)
             print(json.dumps(api, indent=4))
+            date_range = [item['date'] for item in api]
+            close_value = [item['uClose'] for item in api]
+            open_value = [item['uOpen'] for item in api]
+            plt.plot(date_range, open_value)
+            plt.plot(date_range, close_value)
+            fig = plt.gcf()
+            #convert graph into dtring buffer and then we convert 64 bit code into image
+            buf = io.BytesIO()
+            fig.savefig(buf,format='png')
+            buf.seek(0)
+            string = base64.b64encode(buf.read())
+            uri =  urllib.parse.quote(string)
         except Exception as e:
             api = "Error..."
-        return render(request, 'chart.html' , {'api': api })
+        return render(request, 'chart.html' , {'api': api,'data':uri})
 
     else: 
         return render(request, 'chart.html' , {'schart': " Enter a Ticker Symbol in the Search..."})
@@ -89,8 +106,8 @@ def tickplot(request):
     import urllib, base64
     from matplotlib import pylab
     #from pylab import *
-    # plt.plot(range(10))
-    
+    plt.plot(range(10))
+
     fig = plt.gcf()
     #convert graph into dtring buffer and then we convert 64 bit code into image
     buf = io.BytesIO()

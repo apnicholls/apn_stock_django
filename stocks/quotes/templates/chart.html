@@ -4,7 +4,9 @@
 {% block content%}
 
 <h1> Gonna git me a chart right here ! </h1>
-
+    <div>
+        <img src="data:image/png;base64,{{ data }}" alt="" height="250" ,width="250">
+    </div>
 <br/>
     <form action = "{% url 'chart' %}" class ="form-inline my-2 my-lg-0" method="POST">
         {% csrf_token %}
@@ -23,9 +25,10 @@
         There was an issue ,,  Try again !
 
     {% else %}
+    {% comment %} <img src="data:image/png;base64,{{ data }}" alt="" height="250" ,width="250"> {% endcomment %}
     {% for item in api %}
-       <h1> {{ item.date }}</h1></br>
-       <h1>{{item.uVolume}}</h1></br>
+       <h4> {{ item.date }}</h4></br>
+       <h4>{{item.uClose}}</h4></br>
     {% endfor %} 
 
 
