@@ -107,7 +107,6 @@ def tickplot(request):
     from matplotlib import pylab
     #from pylab import *
     plt.plot(range(10))
-
     fig = plt.gcf()
     #convert graph into dtring buffer and then we convert 64 bit code into image
     buf = io.BytesIO()
