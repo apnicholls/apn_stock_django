@@ -3,7 +3,7 @@
 
 {% block content%}
 
-<h1> Gonna git me a chart right here ! </h1>
+{% comment %} <h1> Gonna git me a chart right here ! </h1>
     <div>
         <img src="data:image/png;base64,{{ data }}" alt="" height="250" ,width="250">
     </div>
@@ -25,7 +25,47 @@
         There was an issue ,,  Try again !
 
     {% else %}
-    {% comment %} <img src="data:image/png;base64,{{ data }}" alt="" height="250" ,width="250"> {% endcomment %}
+
+    {% for item in api %}
+       <h4> {{ item.date }}</h4></br>
+       <h4>{{item.uClose}}</h4></br>
+    {% endfor %} 
+
+
+              
+    {% endif %}
+
+{% endif %} {% endcomment %}
+    <div class="container">
+ 
+<!-- col means column, md >=992px (Also use xs, sm and lg), and the 3 represents the size of the column
+3 * 4 = 12 (A 6 column layout would use 2 if they had equal size) -->
+  <div class="row">
+
+    <!-- When in sm mode the 3rd column jumps up below the 2nd column. To fix it put the following right before the column that messes up using the screen mode being sm that messes up. -->
+    <div class="clearfix visible-sm"></div>
+ 
+    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+
+<br/>
+    <form action = "{% url 'chart' %}" class ="form-inline my-2 my-lg-0" method="POST">
+        {% csrf_token %}
+      <input class="form-control mr-sm-2" type="search" placeholder="Select Stock" aria-label="Search" name="schart">
+      <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit">Get Chart</button>
+    </form>
+<br/>
+
+{% if schart %}
+    {{ schart }}
+{% endif %}
+
+{% if api %}
+
+    {% if api == "Error..." %}
+        There was an issue ,,  Try again !
+
+    {% else %}
+
     {% for item in api %}
        <h4> {{ item.date }}</h4></br>
        <h4>{{item.uClose}}</h4></br>
@@ -36,6 +76,12 @@
     {% endif %}
 
 {% endif %}
+    </div>
+    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+      <img src="data:image/png;base64,{{ data }}" alt="" height="500" ,width="500">
+    </div>
+  </div>
+</div><br>
 
 {% endblock %}
 
