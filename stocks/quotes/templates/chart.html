@@ -3,39 +3,7 @@
 
 {% block content%}
 
-{% comment %} <h1> Gonna git me a chart right here ! </h1>
-    <div>
-        <img src="data:image/png;base64,{{ data }}" alt="" height="250" ,width="250">
-    </div>
-<br/>
-    <form action = "{% url 'chart' %}" class ="form-inline my-2 my-lg-0" method="POST">
-        {% csrf_token %}
-      <input class="form-control mr-sm-2" type="search" placeholder="Select Stock" aria-label="Search" name="schart">
-      <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit">Get Chart</button>
-    </form>
-<br/>
 
-{% if schart %}
-    {{ schart }}
-{% endif %}
-
-{% if api %}
-
-    {% if api == "Error..." %}
-        There was an issue ,,  Try again !
-
-    {% else %}
-
-    {% for item in api %}
-       <h4> {{ item.date }}</h4></br>
-       <h4>{{item.uClose}}</h4></br>
-    {% endfor %} 
-
-
-              
-    {% endif %}
-
-{% endif %} {% endcomment %}
     <div class="container">
  
 <!-- col means column, md >=992px (Also use xs, sm and lg), and the 3 represents the size of the column

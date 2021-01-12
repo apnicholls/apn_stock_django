@@ -1,7 +1,18 @@
 {% extends 'base.html' %}
 
 {% block content%}
-<img src="data:image/png;base64,{{ data }}" alt="" height="250" ,width="250">
+
+<div class="container">
+ 
+<!-- col means column, md >=992px (Also use xs, sm and lg), and the 3 represents the size of the column
+3 * 4 = 12 (A 6 column layout would use 2 if they had equal size) -->
+    <div class="row">
+
+    <!-- When in sm mode the 3rd column jumps up below the 2nd column. To fix it put the following right before the column that messes up using the screen mode being sm that messes up. -->
+        <div class="clearfix visible-sm"></div>
+ 
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+
 {% if ticker %}
     {{ ticker }}
 {% endif %}
@@ -23,8 +34,12 @@
 
     {% endif %}
 
-
 {% endif %}
-
+        </div>
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            <img src="data:image/png;base64,{{ data }}" alt="" height="500" ,width="500">
+        </div>
+    </div>
+</div><br>
 
 {% endblock %}

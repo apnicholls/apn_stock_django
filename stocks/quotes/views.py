@@ -21,7 +21,7 @@ def home(request):
             api = json.loads(api_request.content)
         except Exception as e:
             api = "Error..."
-        api1_request = requests.get("https://cloud.iexapis.com/stable/stock/" + ticker + "/chart/10d?token=pk_3a23ad6ed1d84ad1b10f01c72dc2d07e")
+        api1_request = requests.get("https://cloud.iexapis.com/stable/stock/" + ticker + "/chart/5d?token=pk_3a23ad6ed1d84ad1b10f01c72dc2d07e")
         try:
             api1 = json.loads(api1_request.content)
             print(json.dumps(api1, indent=4))
@@ -32,11 +32,11 @@ def home(request):
             plt.plot(date_range, close_value)
             plt.title("Stock History", fontsize=(20))
             plt.xlabel("Date Range", fontsize=(20))
-            plt.ylabel("Closing Price")
+            plt.ylabel("Closing Price", fontsize=(20))
             fig = plt.gcf()
             #convert graph into dtring buffer and then we convert 64 bit code into image
             buf = io.BytesIO()
-            fig.savefig(buf,format='png')
+            fig.savefig(buf,format='png', facecolor='grey')
             buf.seek(0)
             string = base64.b64encode(buf.read())
             uri =  urllib.parse.quote(string)
